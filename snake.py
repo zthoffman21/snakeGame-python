@@ -111,17 +111,13 @@ while running:
 
     #checks to make sure the snake does not go off screen
     if snakeHead.top < 0:
-        pygame.quit()
-        break
+        running = False
     if snakeHead.bottom > 400:
-        pygame.quit()
-        break
+        running = False
     if snakeHead.left < 0:
-        pygame.quit()
-        break
+        running = False
     if snakeHead.right > 400:
-        pygame.quit()
-        break
+        running = False
 
     #checks if the snake head collides with food
     if food1.colliderect(snakeHead):
@@ -138,19 +134,18 @@ while running:
         pygame.draw.rect(surface, red, food2)
         pygame.display.flip()
 
-#window opens to show score
-size = 300, 300
-pygame.init()
-pygame.display.set_caption("Score")
-surface = pygame.display.set_mode(size)
-running = True
-font = pygame.font.SysFont("Times new Roman", 40)
-text = font.render("Score: " + str(foodCount),True,black)
-
-surface.fill(white)
-surface.blit(text,((150-text.get_width()/2),(150-text.get_height()/2)))
+#changes the surface to display the score
+surface.fill(black)
+font = pygame.font.SysFont("agencyfb", 40)
+text1 = font.render("Score: ",True,green)
+text2 = font.render(str(foodCount),True,red)
+surface.blit(text1, (200 - (text1.get_width() + text2.get_width())/2, 200 - (text1.get_height() + text2.get_height())/2))
+surface.blit(text2, (200 + text1.get_width()/2 , 200 - (text1.get_height() + text2.get_height())/2))
 pygame.display.flip()
+
+running = True
 while running:
+    #checks to see if the user clicks the 'x' button
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == QUIT:
             running = False
